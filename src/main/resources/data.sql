@@ -1,0 +1,1 @@
+INSERT INTO book (name, isbn) VALUES ('ASD', 'ASDSS');
