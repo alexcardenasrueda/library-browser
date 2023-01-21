@@ -42,7 +42,7 @@ public class PersonService implements Person {
      * @return
      */
     @Override
-    public PersonDto getById() {
+    public PersonDto getById(long id) {
         return null;
     }
 }

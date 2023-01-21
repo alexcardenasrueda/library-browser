@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,5 +25,10 @@ public class PersonController {
     @GetMapping
     ResponseEntity<List<PersonDto>> getAll() throws GenericException {
         return ResponseEntity.ok(service.getAll());
+    }
+
+    @GetMapping()
+    ResponseEntity<PersonDto> getById(@RequestParam(required = true, name = "id") long id ) throws GenericException {
+        return ResponseEntity.ok(service.getById(id));
     }
 }

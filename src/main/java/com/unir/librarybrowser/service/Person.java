@@ -9,5 +9,5 @@ public interface Person {
 
     public List<PersonDto> getAll() throws GenericException;
 
-    public PersonDto getById();
+    public PersonDto getById(long id);
 }
