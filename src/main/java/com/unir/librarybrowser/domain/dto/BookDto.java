@@ -11,10 +11,10 @@ import java.time.LocalDate;
 public class BookDto {
 
     private long bookId;
-    private String isbn;
+    private long isbn;
     private String name;
     private String author;
-    private LocalDate publicationYear;
+    private int publicationYear;
     private String synopsis;
     private String image;
 }

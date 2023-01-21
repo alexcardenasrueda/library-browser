@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "person")
 @Entity
-public class Person {
+public class PersonEntity {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -38,5 +38,5 @@ public class Person {
 
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private List<Lend> lendList;
+    private List<LendEntity> lendList;
 }

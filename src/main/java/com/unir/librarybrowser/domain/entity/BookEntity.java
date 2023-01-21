@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "book")
 @Entity
-public class Book {
+public class BookEntity {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Book {
     private long bookId;
 
     @Column(name = "ISBN")
-    private String isbn;
+    private long isbn;
 
     @Column(name = "name")
     private String name;
@@ -29,7 +29,7 @@ public class Book {
     private String author;
 
     @Column(name = "publication_year")
-    private LocalDate publicationYear;
+    private int publicationYear;
 
     @Column(name = "synopsis")
     private String synopsis;
@@ -39,5 +39,5 @@ public class Book {
 
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private List<Lend> lendList;
+    private List<LendEntity> lendList;
 }

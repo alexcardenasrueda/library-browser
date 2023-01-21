@@ -1,5 +1,6 @@
 package com.unir.librarybrowser.controller.exception;
 
+import com.unir.librarybrowser.exception.GenericException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,20 @@ public class RestResponseEntityExceptionHandler
         extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value
-            = { IllegalArgumentException.class, IllegalStateException.class })
+            = {IllegalArgumentException.class, IllegalStateException.class})
     protected ResponseEntity<Object> handleConflict(
             RuntimeException ex, WebRequest request) {
         String bodyOfResponse = "This should be application specific";
+        return handleExceptionInternal(ex, bodyOfResponse,
+                new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+
+    @ExceptionHandler(value
+            = {GenericException.class})
+    protected ResponseEntity<Object> genericHandle(
+            RuntimeException ex, WebRequest request) {
+        String bodyOfResponse = "Test";
         return handleExceptionInternal(ex, bodyOfResponse,
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }

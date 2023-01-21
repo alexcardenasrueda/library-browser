@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Table(name = "lend")
 @Entity
-public class Lend {
+public class LendEntity {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -29,9 +29,9 @@ public class Lend {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "book_id", nullable = false, foreignKey = @ForeignKey(name = "FK_BOOK_LEND"))
-    private Book book;
+    private BookEntity book;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "person_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PERSON_LEND"))
-    private Person person;
+    private PersonEntity person;
 }
