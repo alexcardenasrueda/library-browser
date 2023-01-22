@@ -1,7 +1,5 @@
 package com.unir.librarybrowser.domain.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
