@@ -4,6 +4,7 @@ import com.unir.librarybrowser.domain.dto.BookDto;
 import com.unir.librarybrowser.domain.dto.LendDto;
 import com.unir.librarybrowser.domain.entity.LendEntity;
 import com.unir.librarybrowser.exception.GenericException;
+import com.unir.librarybrowser.exception.NotFoundException;
 import com.unir.librarybrowser.service.Lend;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class LendController {
         return ResponseEntity.ok(lendService.getAll());
     }
 
-    @GetMapping(value ="/getById", params = "id")
-    ResponseEntity<LendDto> getById(@RequestParam(required = true, name = "id") long id ) throws GenericException {
+    @GetMapping(value ="/get-by-id", params = "id")
+    ResponseEntity<LendDto> getById(@RequestParam(required = true, name = "id") long id ) throws GenericException, NotFoundException {
         return ResponseEntity.ok(lendService.getById(id));
     }
 }
