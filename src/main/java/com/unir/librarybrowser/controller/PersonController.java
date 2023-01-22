@@ -27,7 +27,7 @@ public class PersonController {
         return ResponseEntity.ok(service.getAll());
     }
 
-    @GetMapping()
+    @GetMapping(value ="/getById")
     ResponseEntity<PersonDto> getById(@RequestParam(required = true, name = "id") long id ) throws GenericException {
         return ResponseEntity.ok(service.getById(id));
     }
