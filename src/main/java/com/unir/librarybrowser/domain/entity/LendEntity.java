@@ -1,6 +1,7 @@
 package com.unir.librarybrowser.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,11 +28,15 @@ public class LendEntity {
     @Column(name = "real_return_date")
     private LocalDate realReturnDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonBackReference
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "book_id", nullable = false, foreignKey = @ForeignKey(name = "FK_BOOK_LEND"))
     private BookEntity book;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonBackReference
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "person_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PERSON_LEND"))
     private PersonEntity person;
 }

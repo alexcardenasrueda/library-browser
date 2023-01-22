@@ -1,6 +1,7 @@
 package com.unir.librarybrowser.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,7 @@ public class BookEntity {
     @Column(name = "image")
     private String image;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<LendEntity> lendList;
