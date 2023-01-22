@@ -38,7 +38,6 @@ public class BookEntity {
     @Column(name = "image")
     private String image;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<LendEntity> lendList;

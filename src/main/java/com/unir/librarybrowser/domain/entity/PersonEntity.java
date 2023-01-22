@@ -37,7 +37,6 @@ public class PersonEntity {
     @Column(name = "email")
     private String email;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<LendEntity> lendList;

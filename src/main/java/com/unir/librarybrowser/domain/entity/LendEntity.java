@@ -28,15 +28,11 @@ public class LendEntity {
     @Column(name = "real_return_date")
     private LocalDate realReturnDate;
 
-    @JsonBackReference
-    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "book_id", nullable = false, foreignKey = @ForeignKey(name = "FK_BOOK_LEND"))
     private BookEntity book;
 
-    @JsonBackReference
-    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "person_id", nullable = false, foreignKey = @ForeignKey(name = "FK_PERSON_LEND"))
     private PersonEntity person;
 }

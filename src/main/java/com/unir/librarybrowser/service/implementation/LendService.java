@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LendService implements Lend {
@@ -39,6 +40,11 @@ public class LendService implements Lend {
 
     @Override
     public LendDto getById(long id) {
+        Optional<LendEntity> lendOpt = lendRepository.findById(id);
+        if (lendOpt.isPresent()) {
+            LendDto lend = modelMapper.map(lendOpt.get(), LendDto.class);
+            return lend;
+        }
         return null;
     }
 }
