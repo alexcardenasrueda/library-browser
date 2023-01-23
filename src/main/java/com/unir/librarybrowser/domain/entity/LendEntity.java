@@ -1,7 +1,5 @@
 package com.unir.librarybrowser.domain.entity;
 
-
-
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

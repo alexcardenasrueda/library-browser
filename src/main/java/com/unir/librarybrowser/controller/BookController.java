@@ -19,17 +19,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookController {
 
-    @Autowired
-    private Book service;
+  @Autowired
+  private Book service;
 
-    @GetMapping
-    ResponseEntity<List<BookDto>> getAll() throws GenericException {
-        return ResponseEntity.ok(service.getAll());
-    }
+  @GetMapping
+  ResponseEntity<List<BookDto>> getAll() throws GenericException {
+    return ResponseEntity.ok(service.getAll());
+  }
 
-    @GetMapping(value = "/get-by-id")
-    ResponseEntity<BookDto> getById(@RequestParam(required = true, value = "id") long id) throws GenericException, NotFoundException {
-        return ResponseEntity.ok(service.getById(id));
-    }
+  @GetMapping(value = "/get-by-id")
+  ResponseEntity<BookDto> getById(@RequestParam(required = true, value = "id") long id)
+      throws GenericException, NotFoundException {
+    return ResponseEntity.ok(service.getById(id));
+  }
 
 }
