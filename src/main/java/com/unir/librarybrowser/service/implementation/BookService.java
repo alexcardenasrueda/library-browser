@@ -22,55 +22,58 @@ import java.util.Optional;
 @PropertySource("classpath:constants.properties")
 public class BookService implements Book {
 
-    @Autowired
-    BookRepository repository;
+  @Autowired
+  BookRepository repository;
 
-    @Autowired
-    ModelMapper modelMapper;
+  @Autowired
+  ModelMapper modelMapper;
 
-    @Value("${exception.book.not_found_all}")
-    private String bookNotFoundAll;
+  @Value("${exception.book.not_found_all}")
+  private String bookNotFoundAll;
 
-    @Value("${exception.book.not_found}")
-    private String bookNotFound;
+  @Value("${exception.book.not_found}")
+  private String bookNotFound;
 
-    /**
-     * @return
-     */
-    @Override
-    public List<BookDto> getAll() throws GenericException {
-        List<BookDto> books = new ArrayList<>();
+  /**
+   * Find all library's books
+   *
+   * @return List of BookDto that contains simple object with book's specification
+   */
+  @Override
+  public List<BookDto> getAll() throws GenericException, NotFoundException {
+    List<BookDto> books = new ArrayList<>();
 
-        try {
-            List<BookEntity> allBooks = repository.findAll();
-            if (allBooks == null || allBooks.isEmpty()) {
-                throw new NotFoundException(bookNotFoundAll);
-            }
-            books = modelMapper.map(allBooks, new TypeToken<List<BookDto>>() {
-            }.getType());
-        } catch (RuntimeException e) {
-            throw new GenericException(e.getMessage());
-        } catch (NotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return books;
+    try {
+      List<BookEntity> allBooks = repository.findAll();
+      if (allBooks == null || allBooks.isEmpty()) {
+        throw new NotFoundException(bookNotFoundAll);
+      }
+      books = modelMapper.map(allBooks, new TypeToken<List<BookDto>>() {
+      }.getType());
+    } catch (RuntimeException e) {
+      throw new GenericException(e.getMessage());
     }
+    return books;
+  }
 
-    /**
-     * @return
-     */
-    @Override
-    public BookDto getById(long id) throws GenericException, NotFoundException {
-        BookDto book;
-        try {
-            Optional<BookEntity> entityBook = repository.findById(id);
-            if (entityBook.isEmpty()) {
-                throw new NotFoundException(MessageFormat.format(bookNotFound, id));
-            }
-            book = modelMapper.map(entityBook.get(), BookDto.class);
-        } catch (RuntimeException e) {
-            throw new GenericException(e.getMessage());
-        }
-        return book;
+  /**
+   * Return one BookDto Object with book's information found by id
+   *
+   * @param id : Long number to find book in DB
+   * @return BookDto object
+   */
+  @Override
+  public BookDto getById(long id) throws GenericException, NotFoundException {
+    BookDto book;
+    try {
+      Optional<BookEntity> entityBook = repository.findById(id);
+      if (entityBook.isEmpty()) {
+        throw new NotFoundException(MessageFormat.format(bookNotFound, id));
+      }
+      book = modelMapper.map(entityBook.get(), BookDto.class);
+    } catch (RuntimeException e) {
+      throw new GenericException(e.getMessage());
     }
+    return book;
+  }
 }

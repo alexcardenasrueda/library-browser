@@ -23,7 +23,7 @@ public class BookController {
   private Book service;
 
   @GetMapping
-  ResponseEntity<List<BookDto>> getAll() throws GenericException {
+  ResponseEntity<List<BookDto>> getAll() throws GenericException, NotFoundException {
     return ResponseEntity.ok(service.getAll());
   }
 
