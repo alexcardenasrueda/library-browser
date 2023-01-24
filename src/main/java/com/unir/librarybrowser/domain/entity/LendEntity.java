@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class LendEntity {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lend_id")
     private long lendId;
 

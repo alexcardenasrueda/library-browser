@@ -43,6 +43,4 @@ public class RestResponseEntityExceptionHandler
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
-
-
 }
