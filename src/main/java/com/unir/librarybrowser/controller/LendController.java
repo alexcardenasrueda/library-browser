@@ -29,7 +29,7 @@ public class LendController {
         return ResponseEntity.ok(lendService.getAll());
     }
 
-    @GetMapping(value ="/get-by-id", params = "id")
+    @GetMapping(value ="/get_by_id", params = "id")
     ResponseEntity<LendDto> getById(@RequestParam(required = true, name = "id") long id ) throws GenericException, NotFoundException {
         return ResponseEntity.ok(lendService.getById(id));
     }
