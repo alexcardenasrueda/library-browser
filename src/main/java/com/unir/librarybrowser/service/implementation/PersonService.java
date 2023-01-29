@@ -46,7 +46,7 @@ public class PersonService implements Person {
             if (allPeople == null || allPeople.isEmpty()) {
                 throw new NotFoundException(personNotFoundAll);
             }
-            people = modelMapper.map(allPeople, new TypeToken<List<BookDto>>() {
+            people = modelMapper.map(allPeople, new TypeToken<List<PersonDto>>() {
             }.getType());
         } catch (RuntimeException e) {
             throw new GenericException(e.getMessage());
