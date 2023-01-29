@@ -9,10 +9,7 @@ import com.unir.librarybrowser.service.Lend;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,8 +26,9 @@ public class LendController {
         return ResponseEntity.ok(lendService.getAll());
     }
 
-    @GetMapping(value ="/get-by-id", params = "id")
-    ResponseEntity<LendDto> getById(@RequestParam(required = true, name = "id") long id ) throws GenericException, NotFoundException {
+    @GetMapping(value = "/get_by_id/{id}")
+    ResponseEntity<LendDto> getById(@PathVariable(required = true) long id)
+            throws NotFoundException, GenericException {
         return ResponseEntity.ok(lendService.getById(id));
     }
 }
