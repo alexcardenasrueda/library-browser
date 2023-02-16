@@ -11,4 +11,7 @@ public interface Book {
     public List<BookDto> getAll() throws GenericException, NotFoundException;
 
     public BookDto getById(long id) throws GenericException, NotFoundException;
+
+    public BookDto getByName(String name) throws GenericException, NotFoundException;
+
 }
