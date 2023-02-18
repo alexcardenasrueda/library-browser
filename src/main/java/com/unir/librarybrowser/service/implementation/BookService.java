@@ -2,7 +2,7 @@ package com.unir.librarybrowser.service.implementation;
 
 import com.unir.librarybrowser.domain.dto.BookDto;
 import com.unir.librarybrowser.domain.entity.BookEntity;
-import com.unir.librarybrowser.domain.entity.ElasticBook;
+import com.unir.librarybrowser.domain.entity.ElasticBookEntity;
 import com.unir.librarybrowser.exception.GenericException;
 import com.unir.librarybrowser.exception.NotFoundException;
 import com.unir.librarybrowser.repository.BookRepository;
@@ -14,7 +14,6 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -86,7 +85,7 @@ public class BookService implements Book {
 
   @Override
   public BookDto getByName(String name) throws GenericException, NotFoundException {
-    ElasticBook result = elasticsearchRepository.getByName(name);
+    ElasticBookEntity result = elasticsearchRepository.getByName(name);
     return new BookDto();
   }
 }

@@ -1,21 +1,23 @@
-package com.unir.librarybrowser.domain.entity;
+package com.unir.librarybrowser.domain.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.elasticsearch.annotations.*;
-
-import javax.persistence.*;
-import java.util.List;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.InnerField;
+import org.springframework.data.elasticsearch.annotations.MultiField;
 
 @Document(indexName = "books", createIndex = true)
 @Data
 @NoArgsConstructor
-public class ElasticBook {
+public class ElasticBookDto {
 
     @Id
-    private String bookId;
+    private long bookId;
 
-    @Column(name = "ISBN")
+    @Field(type = FieldType.Integer, name = "ISBN")
     private long isbn;
 
     @MultiField(mainField = @Field(type = FieldType.Keyword, name="name"),
