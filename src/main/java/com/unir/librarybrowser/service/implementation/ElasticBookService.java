@@ -4,22 +4,30 @@ import com.unir.librarybrowser.domain.dto.ElasticBookDto;
 import com.unir.librarybrowser.domain.entity.ElasticBookEntity;
 import com.unir.librarybrowser.repository.ElasticSearchRepository;
 import com.unir.librarybrowser.service.ElasticBook;
+import java.util.ArrayList;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+import java.util.Optional;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
 public class ElasticBookService implements ElasticBook {
 
-  private final ElasticSearchRepository repository;
+  @Autowired
+  private ElasticSearchRepository repository;
+
+  @Autowired
+  ModelMapper modelMapper;
 
   /**
    * @return
    */
   @Override
-  public List<ElasticBookDto> getAll() {
-    return repository.getAvaliableBooks();
+  public List<ElasticBookDto> getBooks() {
+    List<ElasticBookEntity> all = repository.getAll();
+    return modelMapper.map(all, new TypeToken<List<ElasticBookDto>>() {}.getType());
   }
 
   /**
@@ -28,7 +36,9 @@ public class ElasticBookService implements ElasticBook {
    */
   @Override
   public ElasticBookDto getById(long id) {
-    return repository.getById(id);
+    ElasticBookDto bookDto = ElasticBookDto.builder().build();
+    Optional<ElasticBookEntity> book = repository.getById(id);
+    return bookDto;
   }
 
   /**
@@ -36,8 +46,10 @@ public class ElasticBookService implements ElasticBook {
    * @return
    */
   @Override
-  public ElasticBookEntity getByName(String name) {
-    return repository.getByName(name);
+  public ElasticBookDto getByName(String name) {
+    ElasticBookDto bookDto = ElasticBookDto.builder().build();
+    ElasticBookEntity bookEntity = repository.getByName(name);
+    return bookDto;
   }
 
   /**
@@ -46,7 +58,9 @@ public class ElasticBookService implements ElasticBook {
    */
   @Override
   public ElasticBookDto searchByName(String value) {
-    return repository.searchByName(value);
+    ElasticBookDto bookDto = ElasticBookDto.builder().build();
+    Optional<ElasticBookEntity> OptionalBookEntity = repository.searchByName(value);
+    return bookDto;
   }
 
   /**
@@ -54,7 +68,9 @@ public class ElasticBookService implements ElasticBook {
    * @return
    */
   @Override
-  public List<ElasticBookDto> searchBySinopsis(String value) {
-    return repository.searchBySynopsis(value);
+  public List<ElasticBookDto> searchBySynopsis(String value) {
+    List<ElasticBookDto> bookDtos = new ArrayList<>();
+    List<ElasticBookEntity> bookEntities = repository.searchBySynopsis(value);
+    return bookDtos;
   }
 }

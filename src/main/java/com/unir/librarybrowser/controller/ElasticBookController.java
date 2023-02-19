@@ -6,6 +6,7 @@ import com.unir.librarybrowser.service.ElasticBook;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/elastic/books")
-@RequiredArgsConstructor
 public class ElasticBookController {
 
-  private final ElasticBook service;
+  @Autowired
+  private ElasticBook service;
 
   @GetMapping
-  public ResponseEntity<List<ElasticBookDto>> getAll(){
-    List<ElasticBookDto> books = service.getAll();
+  public ResponseEntity<List<ElasticBookDto>> getBooks(){
+    List<ElasticBookDto> books = service.getBooks();
     if (!Objects.nonNull(books)){
       return ResponseEntity.notFound().build();
     }
@@ -38,8 +39,8 @@ public class ElasticBookController {
   }
 
   @GetMapping(value = "/match/{name}")
-  public ResponseEntity<ElasticBookEntity> getByName(@PathVariable(required = true) String name){
-    ElasticBookEntity book = service.getByName(name);
+  public ResponseEntity<ElasticBookDto> getByName(@PathVariable(required = true) String name){
+    ElasticBookDto book = service.getByName(name);
     if (!Objects.nonNull(book)){
       return ResponseEntity.notFound().build();
     }
@@ -57,7 +58,7 @@ public class ElasticBookController {
 
   @GetMapping(value = "/search/full-text/{value}")
   public ResponseEntity<List<ElasticBookDto>> searchBySynopsis(@PathVariable(required = true) String value){
-    List<ElasticBookDto> books = service.searchBySinopsis(value);
+    List<ElasticBookDto> books = service.searchBySynopsis(value);
     if (!Objects.nonNull(books)){
       return ResponseEntity.notFound().build();
     }

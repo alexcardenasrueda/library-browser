@@ -13,11 +13,11 @@ public interface ElasticBookRepository extends ElasticsearchRepository<ElasticBo
 
     Optional<ElasticBookEntity> findByName(String name);
 
-    Optional<ElasticBookEntity> getById(long id);
+    Optional<ElasticBookEntity> findById(long id);
 
     Optional<ElasticBookEntity> searchByName(String value);
 
-    List<ElasticBookDto> getAvaliableBooks();
+    List<ElasticBookEntity> findAll();
 
-    List<ElasticBookDto> searchBySynopsis(String value);
+    List<ElasticBookEntity> searchBySynopsis(String value);
 }

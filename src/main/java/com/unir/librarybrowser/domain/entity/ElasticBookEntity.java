@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Id;
 public class ElasticBookEntity {
 
     @Id
-    private long bookId;
+    private long id;
 
     @Field(type = FieldType.Integer, name = "ISBN")
     private long isbn;

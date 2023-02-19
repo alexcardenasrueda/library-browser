@@ -1,5 +1,7 @@
 package com.unir.librarybrowser.domain.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -12,10 +14,12 @@ import org.springframework.data.elasticsearch.annotations.MultiField;
 @Document(indexName = "books", createIndex = true)
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ElasticBookDto {
 
     @Id
-    private long bookId;
+    private long id;
 
     @Field(type = FieldType.Integer, name = "ISBN")
     private long isbn;

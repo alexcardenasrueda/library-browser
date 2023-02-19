@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface ElasticBook {
 
-  List<ElasticBookDto> getAll();
+  List<ElasticBookDto> getBooks();
 
   ElasticBookDto getById(long id);
 
-  ElasticBookEntity getByName(String name);
+  ElasticBookDto getByName(String name);
 
   ElasticBookDto searchByName(String value);
 
-  List<ElasticBookDto> searchBySinopsis(String value);
+  List<ElasticBookDto> searchBySynopsis(String value);
 }
