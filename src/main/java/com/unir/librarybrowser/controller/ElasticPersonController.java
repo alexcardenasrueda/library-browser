@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/elastic/books")
-public class ElasticBookController {
+@RequestMapping("/elastic/people")
+public class ElasticPersonController {
 
   @Autowired
   private ElasticBook service;

@@ -1,6 +1,5 @@
 package com.unir.librarybrowser.repository;
 
-import com.unir.librarybrowser.domain.dto.ElasticBookDto;
 import com.unir.librarybrowser.domain.entity.ElasticBookEntity;
 import java.util.List;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;

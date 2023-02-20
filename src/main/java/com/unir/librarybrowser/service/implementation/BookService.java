@@ -85,7 +85,6 @@ public class BookService implements Book {
 
   @Override
   public BookDto getByName(String name) throws GenericException, NotFoundException {
-    ElasticBookEntity result = elasticsearchRepository.getByName(name);
     return new BookDto();
   }
 }

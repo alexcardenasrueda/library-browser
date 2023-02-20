@@ -28,7 +28,7 @@ public class ElasticBookEntity {
     private int publicationYear;
 
     @Field(type = FieldType.Text, name = "synopsis")
-    private String synopsis;
+    private String synopsis; // To full text
 
     @Field(type = FieldType.Text, name = "image")
     private String image;

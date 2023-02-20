@@ -1,11 +1,18 @@
 package com.unir.librarybrowser.repository;
 
-import com.unir.librarybrowser.domain.dto.ElasticBookDto;
 import com.unir.librarybrowser.domain.entity.ElasticBookEntity;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder.Type;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,13 +22,18 @@ public class ElasticSearchRepository {
       {
           "name.search", "name.search_2gram", "name.search_3gram"
       };
+
+  private final String[] synopsisSearchFields =
+      {
+          "synopsis.search", "synopsis.search_2gram", "synopsis.search_3gram"
+      };
   @Autowired
   private ElasticBookRepository elasticBookRepository;
   @Autowired
   private ElasticsearchOperations elasticClient;
 
-  public ElasticBookEntity getByName(String name) {
-    return elasticBookRepository.findByName(name).orElse(null);
+  public  Optional<ElasticBookEntity> getByName(String name) {
+    return Optional.ofNullable(elasticBookRepository.findByName(name).orElse(null));
   }
 
   public List<ElasticBookEntity> getAll() {
@@ -32,11 +44,36 @@ public class ElasticSearchRepository {
     return elasticBookRepository.findById(id);
   }
 
-  public Optional<ElasticBookEntity> searchByName(String value) {
-    return elasticBookRepository.searchByName(value);
+  public List<ElasticBookEntity> searchByName(String value) {
+    BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+    boolQuery.must(QueryBuilders.multiMatchQuery(value,  nameSearchFields)
+        .type(Type.BOOL_PREFIX));
+
+    NativeSearchQueryBuilder nativeSearchQueryBuilder =
+        new NativeSearchQueryBuilder().withQuery(boolQuery);
+
+    Query query = nativeSearchQueryBuilder.build();
+
+    SearchHits<ElasticBookEntity> result = elasticClient.search(query, ElasticBookEntity.class);
+
+  return result.getSearchHits().stream().map(SearchHit:: getContent).collect(Collectors.toList());
   }
 
   public List<ElasticBookEntity> searchBySynopsis(String value) {
-      return elasticBookRepository.searchBySynopsis(value);
+    BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+    boolQuery.must(QueryBuilders.multiMatchQuery(value,  synopsisSearchFields)
+        .type(Type.BOOL_PREFIX));
+
+    NativeSearchQueryBuilder nativeSearchQueryBuilder =
+        new NativeSearchQueryBuilder().withQuery(boolQuery);
+
+    Query query = nativeSearchQueryBuilder.build();
+    SearchHits<ElasticBookEntity> result = elasticClient.search(query, ElasticBookEntity.class);
+
+    return result.getSearchHits().stream().map(SearchHit:: getContent).collect(Collectors.toList());
+  }
+
+  public ElasticBookEntity saveBook(ElasticBookEntity book){
+    return elasticBookRepository.save(book);
   }
 }
