@@ -1,6 +1,7 @@
 package com.unir.librarybrowser.repository;
 
 import com.unir.librarybrowser.domain.entity.ElasticBookEntity;
+import com.unir.librarybrowser.domain.entity.ElasticPersonEntity;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,13 +31,15 @@ public class ElasticSearchRepository {
   @Autowired
   private ElasticBookRepository elasticBookRepository;
   @Autowired
+  private ElasticPersonRepository elasticPersonRepository;
+  @Autowired
   private ElasticsearchOperations elasticClient;
 
   public  Optional<ElasticBookEntity> getByName(String name) {
     return Optional.ofNullable(elasticBookRepository.findByName(name).orElse(null));
   }
 
-  public List<ElasticBookEntity> getAll() {
+  public List<ElasticBookEntity> getAllBooks() {
     return elasticBookRepository.findAll();
   }
 
@@ -75,5 +78,9 @@ public class ElasticSearchRepository {
 
   public ElasticBookEntity saveBook(ElasticBookEntity book){
     return elasticBookRepository.save(book);
+  }
+
+  public ElasticPersonEntity savePerson(ElasticPersonEntity person){
+    return elasticPersonRepository.save(person);
   }
 }

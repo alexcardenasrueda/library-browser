@@ -1,10 +1,12 @@
 package com.unir.librarybrowser.service.implementation;
 
 import com.unir.librarybrowser.domain.dto.ElasticBookDto;
+import com.unir.librarybrowser.domain.dto.ElasticPersonDto;
 import com.unir.librarybrowser.domain.entity.ElasticBookEntity;
+import com.unir.librarybrowser.domain.entity.ElasticPersonEntity;
 import com.unir.librarybrowser.exception.NotFoundException;
 import com.unir.librarybrowser.repository.ElasticSearchRepository;
-import com.unir.librarybrowser.service.ElasticBook;
+import com.unir.librarybrowser.service.ElasticPerson;
 import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
@@ -13,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ElasticBookService implements ElasticBook {
+public class ElasticPersonService implements ElasticPerson {
 
   @Autowired
   private ElasticSearchRepository repository;
@@ -25,7 +27,7 @@ public class ElasticBookService implements ElasticBook {
    * @return
    */
   @Override
-  public List<ElasticBookDto> getBooks() {
+  public List<ElasticPersonDto> getAll() {
     List<ElasticBookEntity> all = repository.getAllBooks();
     return modelMapper.map(all, new TypeToken<List<ElasticBookDto>>() {
     }.getType());
@@ -36,12 +38,12 @@ public class ElasticBookService implements ElasticBook {
    * @return
    */
   @Override
-  public ElasticBookDto getById(long id) throws NotFoundException {
+  public ElasticPersonDto getById(long id) throws NotFoundException {
     Optional<ElasticBookEntity> book = repository.getById(id);
     if (book.isEmpty()) {
       throw new NotFoundException("Not found any book for this id");
     }
-    return modelMapper.map(book.get(), ElasticBookDto.class);
+    return modelMapper.map(book.get(), ElasticPersonDto.class);
   }
 
   /**
@@ -49,12 +51,12 @@ public class ElasticBookService implements ElasticBook {
    * @return
    */
   @Override
-  public ElasticBookDto getByName(String name) throws NotFoundException {
+  public ElasticPersonDto getByName(String name) throws NotFoundException {
     Optional<ElasticBookEntity> bookEntity = repository.getByName(name);
     if (bookEntity.isEmpty()) {
       throw new NotFoundException("Not found any book for this name");
     }
-    return modelMapper.map(bookEntity.get(), ElasticBookDto.class);
+    return modelMapper.map(bookEntity.get(), ElasticPersonDto.class);
   }
 
   /**
@@ -62,23 +64,12 @@ public class ElasticBookService implements ElasticBook {
    * @return
    */
   @Override
-  public ElasticBookDto searchByName(String value) throws NotFoundException {
+  public ElasticPersonDto searchByName(String value) throws NotFoundException {
     List<ElasticBookEntity> elasticBookEntities = repository.searchByName(value);
     if (elasticBookEntities.isEmpty()) {
       throw new NotFoundException("Not found any book for this name");
     }
-    return modelMapper.map(elasticBookEntities, ElasticBookDto.class);
-  }
-
-  /**
-   * @param value
-   * @return
-   */
-  @Override
-  public List<ElasticBookDto> searchBySynopsis(String value) {
-    List<ElasticBookEntity> bookEntities = repository.searchBySynopsis(value);
-    return modelMapper.map(bookEntities, new TypeToken<List<ElasticBookDto>>() {
-    }.getType());
+    return modelMapper.map(elasticBookEntities, ElasticPersonDto.class);
   }
 
   /**
@@ -86,9 +77,9 @@ public class ElasticBookService implements ElasticBook {
    * @return
    */
   @Override
-  public ElasticBookDto createBook(ElasticBookDto request) {
-    ElasticBookEntity createdBookEntity = repository.saveBook(
-        modelMapper.map(request, ElasticBookEntity.class));
-    return modelMapper.map(createdBookEntity, ElasticBookDto.class);
+  public ElasticPersonDto createPerson(ElasticPersonDto request) {
+    ElasticPersonEntity createdPersonEntity = repository.savePerson(
+        modelMapper.map(request, ElasticPersonEntity.class));
+    return modelMapper.map(createdPersonEntity, ElasticPersonDto.class);
   }
 }

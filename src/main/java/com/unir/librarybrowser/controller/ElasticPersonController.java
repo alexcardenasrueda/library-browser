@@ -1,12 +1,13 @@
 package com.unir.librarybrowser.controller;
 
-import com.unir.librarybrowser.domain.dto.ElasticBookDto;
+import com.unir.librarybrowser.domain.dto.ElasticPersonDto;
 import com.unir.librarybrowser.exception.NotFoundException;
-import com.unir.librarybrowser.service.ElasticBook;
+import com.unir.librarybrowser.service.ElasticPerson;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,65 +17,57 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/elastic/people")
+@CrossOrigin
 public class ElasticPersonController {
 
   @Autowired
-  private ElasticBook service;
+  private ElasticPerson service;
 
   @GetMapping
-  public ResponseEntity<List<ElasticBookDto>> getBooks(){
-    List<ElasticBookDto> books = service.getBooks();
-    if (!Objects.nonNull(books)){
+  public ResponseEntity<List<ElasticPersonDto>> getAll() {
+    List<ElasticPersonDto> users = service.getAll();
+    if (!Objects.nonNull(users)) {
       return ResponseEntity.notFound().build();
     }
-    return ResponseEntity.ok(books);
+    return ResponseEntity.ok(users);
   }
 
   @GetMapping(value = "/get_by_id/{id}")
-  public ResponseEntity<ElasticBookDto> getById(@PathVariable(required = true) long id)
+  public ResponseEntity<ElasticPersonDto> getById(@PathVariable(required = true) long id)
       throws NotFoundException {
-    ElasticBookDto book = service.getById(id);
-    if (!Objects.nonNull(book)){
+    ElasticPersonDto book = service.getById(id);
+    if (!Objects.nonNull(book)) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(book);
   }
 
   @GetMapping(value = "/match/{name}")
-  public ResponseEntity<ElasticBookDto> getByName(@PathVariable(required = true) String name)
+  public ResponseEntity<ElasticPersonDto> getByName(@PathVariable(required = true) String name)
       throws NotFoundException {
-    ElasticBookDto book = service.getByName(name);
-    if (!Objects.nonNull(book)){
+    ElasticPersonDto book = service.getByName(name);
+    if (!Objects.nonNull(book)) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(book);
   }
 
   @GetMapping(value = "/search_as_you_type/{value}")
-  public ResponseEntity<ElasticBookDto> searchByName(@PathVariable(required = true) String value)
+  public ResponseEntity<ElasticPersonDto> searchByName(@PathVariable(required = true) String value)
       throws NotFoundException {
-    ElasticBookDto book = service.searchByName(value);
-    if (!Objects.nonNull(book)){
+    ElasticPersonDto book = service.searchByName(value);
+    if (!Objects.nonNull(book)) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(book);
   }
 
-  @GetMapping(value = "/search/full-text/{value}")
-  public ResponseEntity<List<ElasticBookDto>> searchBySynopsis(@PathVariable(required = true) String value){
-    List<ElasticBookDto> books = service.searchBySynopsis(value);
-    if (!Objects.nonNull(books)){
-      return ResponseEntity.notFound().build();
-    }
-    return ResponseEntity.ok(books);
-  }
-
   @PostMapping
-  public ResponseEntity<ElasticBookDto> createBook(@RequestBody ElasticBookDto request){
-      ElasticBookDto createdBook = service.createBook(request);
-    if (!Objects.nonNull(createdBook)){
+  public ResponseEntity<ElasticPersonDto> createPerson(@RequestBody ElasticPersonDto request) {
+    ElasticPersonDto createdPerson = service.createPerson(request);
+    if (!Objects.nonNull(createdPerson)) {
       return ResponseEntity.notFound().build();
     }
-    return ResponseEntity.ok(createdBook);
+    return ResponseEntity.ok(createdPerson);
   }
 }

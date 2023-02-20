@@ -33,4 +33,3 @@ public class ElasticBookEntity {
     @Field(type = FieldType.Text, name = "image")
     private String image;
 }
-
