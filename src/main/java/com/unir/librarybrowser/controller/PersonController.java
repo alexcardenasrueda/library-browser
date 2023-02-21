@@ -1,11 +1,8 @@
 package com.unir.librarybrowser.controller;
 
-import com.unir.librarybrowser.domain.dto.BookDto;
-import com.unir.librarybrowser.domain.dto.LendDto;
 import com.unir.librarybrowser.domain.dto.PersonDto;
 import com.unir.librarybrowser.exception.GenericException;
 import com.unir.librarybrowser.exception.NotFoundException;
-import com.unir.librarybrowser.service.Book;
 import com.unir.librarybrowser.service.Person;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
